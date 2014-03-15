@@ -1,6 +1,6 @@
 # FormObjects
 
-TODO: Write a gem description
+FormObjects gives you a easy way of building complex and nested form objects. 
 
 ## Installation
 
@@ -18,7 +18,48 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Summary:
+* FormObjects use Virtus for Property API
+* Nested forms objects are validate together with parent form, errors are being push to parent.
+* ``` #serialized_attributes ``` method returns attributes hash 
+
+```
+class AddressForm < FormObjects::Base
+  attribute :street, String
+  attribute :city, String
+  
+  validates :street, presence: true
+end
+
+class PersonalInfoForm < FormObjects::Base
+  attribute :first_name, String
+  attribute :last_name, String
+
+  validates :first_name, presence: true
+end
+
+class UserForm < FormObjects::Base
+  attribute :email, String
+
+  attribute :addresses, Array[AddressForm]
+  attribute :personal_info, PersonalInfoForm
+  
+  nested_forms :personal_info, :addresses
+end
+
+service = UserUpdater.new
+form = UserForm.new
+
+form.update({
+  email: 'john.doe@example.com',
+  personal_info_attributes: {first_name: 'John'},
+  addresses_attributes: [{street: 'Golden Street'}]
+)
+
+if form.valid?
+    service.update(form.serialized_attributes)
+end
+```
 
 ## Contributing
 
