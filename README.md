@@ -1,5 +1,8 @@
 # FormObjects
 
+[![Code Climate](https://codeclimate.com/github/lluzak/form_objects.png)](https://codeclimate.com/github/lluzak/form_objects)
+[![Build Status](https://travis-ci.org/lluzak/form_objects.png?branch=master)](https://travis-ci.org/lluzak/form_objects)
+
 FormObjects gives you a easy way of building complex and nested form objects. 
 
 ## Installation
