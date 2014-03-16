@@ -9,6 +9,7 @@ end
 
 group :test do
   gem 'rspec'
+  gem "codeclimate-test-reporter", require: nil
   gem 'mutant'
   gem 'mutant-rspec'
 end
