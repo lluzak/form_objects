@@ -3,10 +3,9 @@ before_install: gem install bundler
 rvm:
   - 1.9.3
   - 2.1.0
-  - rbx-2.1.1
 cache: bundler
 script:
-  - bundle exec rspec
+  - RAILS_ENV=test bundle exec rspec
 addons:
   code_climate:
     repo_token: e835e063eadc1a6c9a4d69f1721ea34fc25063cb9dff277855d73f969882cd3f
