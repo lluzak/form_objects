@@ -42,9 +42,7 @@ module FormObjects
       end
 
       def define_nested_writer_method(method_name)
-        define_method "#{method_name}_attributes=" do |data|
-          self.__send__("#{method_name}=", data)
-        end
+        alias_method :"#{method_name}_attributes=", :"#{method_name}="
       end
     end
 
