@@ -36,9 +36,9 @@ describe FormObjects::Nesting do
       UserForm.nested_forms(:addresses, :personal_info)
     end
 
-    it 'calls #attribute= method' do
-      subject.should_receive(:addresses=).with(addresses_data)
+    it '#*_attributes method should set data to corresponding object' do
       subject.addresses_attributes = addresses_data
+      subject.addresses.map(&:attributes).should == addresses_data
     end
   end
 
