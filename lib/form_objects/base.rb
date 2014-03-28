@@ -12,6 +12,10 @@ module FormObjects
       extend ActiveModel::Naming
     end
 
+    def as_json
+      to_hash.as_json
+    end
+
     def persisted?
       false
     end

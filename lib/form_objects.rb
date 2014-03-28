@@ -1,5 +1,6 @@
 require "virtus"
 require "active_model"
+require "active_support/json"
 
 require "form_objects/version"
 require "form_objects/serializer"

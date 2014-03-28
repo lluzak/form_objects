@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "virtus"
   spec.add_dependency "activemodel"
+  spec.add_dependency "activesupport"
 end

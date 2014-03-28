@@ -54,4 +54,17 @@ describe FormObjects::Base do
     end
   end
 
+  describe "#as_json" do
+    let(:form) do
+      Class.new(described_class) do
+        nested_form :addresses, Array[AddressForm]
+      end
+    end
+
+    subject { form.new(:addresses => [{ :street => "Kazimierza" } ]) }
+
+    it 'returns hash of nested forms' do
+      subject.as_json.should == { "addresses" => [ { "street" => "Kazimierza", "city" => nil }] }
+    end
+  end
 end
