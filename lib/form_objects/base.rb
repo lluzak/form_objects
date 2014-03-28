@@ -2,7 +2,7 @@ module FormObjects
   class Base
     include Virtus.model
     include Serializer
-    include Nesting
+    extend Nesting
 
     if ActiveModel::VERSION::MAJOR > 3
       include ActiveModel::Model
@@ -12,5 +12,12 @@ module FormObjects
       extend ActiveModel::Naming
     end
 
+    def persisted?
+      false
+    end
+
+    def self.validates_associated(*attr_names)
+      validates_with AssociatedValidator, _merge_attributes(attr_names)
+    end
   end
 end

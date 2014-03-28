@@ -2,16 +2,28 @@ require 'spec_helper'
 
 describe FormObjects::Base do
 
+  describe "#validates_associated" do
+    let(:klass) do
+      Class.new(described_class) do
+        nested_form :addresses, AddressForm
+      end
+    end
+
+    it "creates validator instance inside #validators array" do
+      klass.validators.should_not be_empty
+    end
+
+    it "creates instance of AssociatedValidator" do
+      klass.validators.any? { |validator| validator.should be_kind_of(FormObjects::AssociatedValidator) }.should be_true
+    end
+  end
+
   it 'includes Virtus Core module' do
     described_class.included_modules.should include Virtus::Model::Core
   end
 
   it 'includes Serializer module ' do
     described_class.included_modules.should include FormObjects::Serializer
-  end
-
-  it 'includes Nesting module' do
-    described_class.included_modules.should include FormObjects::Nesting
   end
 
   describe 'when ActiveModel major version is above 3' do
@@ -38,7 +50,7 @@ describe FormObjects::Base do
 
   describe '#persisted?' do
     it 'always returns false' do
-      subject.persisted?.should be_false
+      subject.persisted?.should == false
     end
   end
 
