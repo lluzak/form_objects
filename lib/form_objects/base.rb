@@ -16,6 +16,8 @@ module FormObjects
       to_hash.as_json
     end
 
+    alias :update :attributes=
+
     def persisted?
       false
     end
