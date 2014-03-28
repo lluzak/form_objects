@@ -18,6 +18,10 @@ module FormObjects
 
     alias :update :attributes=
 
+    class << self
+      alias_method :field, :attribute
+    end
+
     def persisted?
       false
     end
