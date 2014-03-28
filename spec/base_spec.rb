@@ -67,4 +67,19 @@ describe FormObjects::Base do
       subject.as_json.should == { "addresses" => [ { "street" => "Kazimierza", "city" => nil }] }
     end
   end
+
+  describe "#update" do
+    let(:form) do
+      Class.new(described_class) do
+        attribute :addresses, Array[AddressForm]
+      end
+    end
+
+    subject { form.new }
+
+    it "updates attributes for addresses" do
+      subject.update(:addresses => [{ :street => "Kazimierza" }])
+      subject.addresses.first.street.should == "Kazimierza"
+    end
+  end
 end
