@@ -28,21 +28,21 @@ Summary:
 
 ```ruby
 class AddressForm < FormObjects::Base
-  attribute :street, String
-  attribute :city, String
+  field :street, String
+  field :city, String
 
   validates :street, presence: true
 end
 
 class PersonalInfoForm < FormObjects::Base
-  attribute :first_name, String
-  attribute :last_name, String
+  field :first_name, String
+  field :last_name, String
 
   validates :first_name, presence: true
 end
 
 class UserForm < FormObjects::Base
-  attribute :email, String
+  field :email, String
 
   nested_form :addresses, Array[AddressForm]
   nested_form :personal_info, PersonalInfoForm

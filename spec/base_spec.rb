@@ -82,4 +82,16 @@ describe FormObjects::Base do
       subject.addresses.first.street.should == "Kazimierza"
     end
   end
+
+  describe ".field" do
+    let(:form) do
+      Class.new(described_class) do
+        field :addresses, AddressForm
+      end
+    end
+
+    it 'setup attribute for form' do
+      form.new.should respond_to(:addresses)
+    end
+  end
 end
