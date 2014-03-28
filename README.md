@@ -3,7 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/lluzak/form_objects.png)](https://codeclimate.com/github/lluzak/form_objects)
 [![Build Status](https://travis-ci.org/lluzak/form_objects.png?branch=master)](https://travis-ci.org/lluzak/form_objects)
 
-FormObjects gives you a easy way of building complex and nested form objects. 
+FormObjects gives you a easy way of building complex and nested form objects.
 
 ## Installation
 
@@ -24,13 +24,13 @@ Or install it yourself as:
 Summary:
 * FormObjects use Virtus for Property API
 * Nested forms objects are validate together with parent form, errors are being push to parent.
-* ``` #serialized_attributes ``` method returns attributes hash 
+* ``` #serialized_attributes ``` method returns attributes hash
 
-```
+```ruby
 class AddressForm < FormObjects::Base
   attribute :street, String
   attribute :city, String
-  
+
   validates :street, presence: true
 end
 
@@ -44,10 +44,8 @@ end
 class UserForm < FormObjects::Base
   attribute :email, String
 
-  attribute :addresses, Array[AddressForm]
-  attribute :personal_info, PersonalInfoForm
-  
-  nested_forms :personal_info, :addresses
+  nested_form :addresses, Array[AddressForm]
+  nested_form :personal_info, PersonalInfoForm
 end
 
 service = UserUpdater.new
@@ -60,7 +58,7 @@ form.update({
 )
 
 if form.valid?
-    service.update(form.serialized_attributes)
+  service.update(form.serialized_attributes)
 end
 ```
 

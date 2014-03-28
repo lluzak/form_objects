@@ -14,7 +14,4 @@ end
 
 class UserForm < FormObjects::Base
   attribute :email, String
-
-  attribute :addresses, Array[AddressForm]
-  attribute :personal_info, PersonalInfoForm
 end
