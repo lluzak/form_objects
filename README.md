@@ -62,6 +62,35 @@ if form.valid?
 end
 ```
 
+# Params conversion
+
+When you use HTTP there is no ensure that parameters that you receive will be ordered. That why rails wrap Arrays inside Hash.
+
+```ruby
+["one", "two", "three"] => {"0" => "one", "1" => "two", "2" => "three"}
+```
+
+But form object expects that nested params will be kind of Array
+
+```ruby
+class UserForm < FormObjects::Base
+  nested_form :addresses, Array[AddressForm]
+end
+
+UserForm.new(:addresses_attributes => [{:name => "Name}]) # good
+# instead of
+UserForm.new(:addresses_attributes => {"0" => {:name => "Name}}) # bad
+```
+
+To avoid these problems you can use `FormObjects::ParamsConverter`.
+
+```ruby
+params = { "event_attributes" => {"0" => "one", "1" => "two", "2" => "three"} }
+converter = FormObjects::ParamsConverter.new(params)
+converter.params #=> { "event_attributes" => ["one", "two", "three"] }
+```
+
+
 ## Contributing
 
 1. Fork it
