@@ -55,7 +55,7 @@ form.update({
   email: 'john.doe@example.com',
   personal_info_attributes: {first_name: 'John'},
   addresses_attributes: [{street: 'Golden Street'}]
-)
+})
 
 if form.valid?
   service.update(form.serialized_attributes)
@@ -77,9 +77,9 @@ class UserForm < FormObjects::Base
   nested_form :addresses, Array[AddressForm]
 end
 
-UserForm.new(:addresses_attributes => [{:name => "Name}]) # good
+UserForm.new(:addresses_attributes => [{:name => "Name"}]) # good
 # instead of
-UserForm.new(:addresses_attributes => {"0" => {:name => "Name}}) # bad
+UserForm.new(:addresses_attributes => {"0" => {:name => "Name"}}) # bad
 ```
 
 To avoid these problems you can use `FormObjects::ParamsConverter`.
