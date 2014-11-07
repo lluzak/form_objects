@@ -21,6 +21,110 @@ Or install it yourself as:
 
 ## Usage
 
+In this micro-library you will not find any magic. Explicit is better than implicit. Simple is better than complex.
+
+### Standard form
+
+At the beginning of the life of your application most of the objects is exactly the same as the form. User include `first_name` and `last_name`.
+Only `first_name` is required.
+
+```ruby
+class User
+  validates :first_name, :presence => true
+end
+```
+
+```ruby
+# controller
+
+def new
+  @user = User.new
+end
+```
+
+```erb
+<%= form_for @user do |f| %>
+  <%= f.label :first_name %>:
+  <%= f.text_field :first_name %><br />
+
+  <%= f.label :last_name %>:
+  <%= f.text_field :last_name %><br />
+
+  <%= f.submit %>
+<% end %>
+```
+
+How the same can be achieved using `FormObjects`?
+
+```ruby
+class UserForm < FormObjects::Base
+  field :first_name, String
+  field :last_name, String
+
+  validates :first_name, presence: true
+end
+```
+
+Out new `UserForm` class does not know nothing about user. Because there is no connection to database.
+That is why you need to explicitly defined each field. First argument is name of attribute and second argument is type
+of this attribute. `#field` method is just alias for `attribute` method from [virtus](https://github.com/solnic/virtus#using-virtus-with-classes).
+
+On `FormObjects` you can use the same validations like in `ActiveRecord::Base` object. So here there is no change.
+
+
+```ruby
+# controller
+
+def new
+  @user_form = UserForm.new
+end
+```
+
+```erb
+<%= form_for @user_form do |f| %>
+  <%= f.label :first_name %>:
+  <%= f.text_field :first_name %><br />
+
+  <%= f.label :last_name %>:
+  <%= f.text_field :last_name %><br />
+
+  <%= f.submit %>
+<% end %>
+```
+
+Ok, now we can just save user to our storage. Do you you think about `@user_form.save`?
+
+![](http://dc472.4shared.com/img/G-w_8x6P/s3/13754405010/Nooo.gif)
+
+Keep your objects simple. Form object is responsible for maintaining and validating data. Things like storing these data leave other objects. So what now?
+You can create `UserCreator`.
+
+```ruby
+class UserCreator
+  def initialize(attributes)
+    @attributes = attributes
+  end
+
+  def create
+    User.create(@attributes)
+  end
+end
+```
+
+```ruby
+# controller
+
+def create
+  @user_form = UserForm.new(params[:user])
+
+  if @user_form.valid?
+    UserCreator.new(@user_form.serialized_attributes)
+  else
+    render :new
+  end
+end
+```
+
 Summary:
 * FormObjects use Virtus for Property API
 * Nested forms objects are validate together with parent form, errors are being push to parent.
