@@ -64,6 +64,8 @@ end
 
 # Params conversion
 
+## Array parameters
+
 When you use HTTP there is no ensure that parameters that you receive will be ordered. That why rails wrap Arrays inside Hash.
 
 ```ruby
@@ -90,6 +92,15 @@ converter = FormObjects::ParamsConverter.new(params)
 converter.params #=> { "event_attributes" => ["one", "two", "three"] }
 ```
 
+## Date parameters
+
+Multi-parameter dates can be easily converted to friendly form.
+
+```ruby
+  params = { "event" => { "date(1i)" => "2014", "date(2i)" => "12", "date(3i)" => "16", "date(4i)" => "12", "date(5i)" => "30", "date(6i)" => "45" } }
+  converter = FormObjects::ParamsConverter.new(params)
+  converter.params #=> { "event" => { "date" => "2014.12.16 12:30:45" } }
+```
 
 ## Contributing
 
