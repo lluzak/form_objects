@@ -1,7 +1,7 @@
 module FormObjects
   module Nesting
-    def nested_form(attribute, form)
-      attribute(attribute, form)
+    def nested_form(attribute, form, options = {})
+      attribute(attribute, form, options)
       validates_associated(attribute)
       define_nested_writer_method(attribute)
     end
