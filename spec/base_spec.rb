@@ -14,7 +14,7 @@ describe FormObjects::Base do
     end
 
     it "creates instance of AssociatedValidator" do
-      klass.validators.any? { |validator| validator.should be_kind_of(FormObjects::AssociatedValidator) }.should be_true
+      klass.validators.any? { |validator| validator.should be_kind_of(FormObjects::AssociatedValidator) }.should be_truthy
     end
   end
 

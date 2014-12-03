@@ -7,7 +7,7 @@ describe FormObjects::Nesting do
   end
 
   it 'define #nested_form method' do
-    FormObjects::Base.methods.include?(:nested_form).should be_true
+    FormObjects::Base.methods.include?(:nested_form).should be_truthy
   end
 
   describe "#nested_form"
@@ -23,7 +23,7 @@ describe FormObjects::Nesting do
     end
 
     it 'defines writer method for attributes' do
-      subject.methods.include?(:personal_info_attributes=).should be_true
+      subject.methods.include?(:personal_info_attributes=).should be_truthy
     end
   end
 
@@ -66,7 +66,7 @@ describe FormObjects::Nesting do
 
     it 'validate nested form' do
       subject.personal_info = PersonalInfoForm.new
-      subject.valid?.should be_false
+      subject.valid?.should be_falsey
 
       subject.personal_info.errors.messages.should include :first_name
     end
