@@ -15,3 +15,9 @@ end
 class UserForm < FormObjects::Base
   attribute :email, String
 end
+
+class MessageForm < FormObjects::Base
+  extend FormObjects::Naming
+
+  field :body, String
+end

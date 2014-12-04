@@ -83,7 +83,7 @@ describe FormObjects::Base do
     end
   end
 
-  describe ".field" do
+  describe "#field" do
     let(:form) do
       Class.new(described_class) do
         field :addresses, AddressForm
