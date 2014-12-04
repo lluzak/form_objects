@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe FormObjects::Serializer do
+  before(:each) do
+    Object.send(:remove_const, 'MessageForm')
+    load 'support/examples.rb'
+  end
 
-  subject { FormObjects::Base.new }
+  subject { MessageForm.new }
 
   describe '#serialized_attributes' do
 

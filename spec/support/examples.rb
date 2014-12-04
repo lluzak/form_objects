@@ -14,10 +14,12 @@ end
 
 class UserForm < FormObjects::Base
   attribute :email, String
+  attribute :author, String
 end
 
 class MessageForm < FormObjects::Base
   extend FormObjects::Naming
 
   field :body, String
+  field :author, String
 end
