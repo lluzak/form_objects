@@ -54,6 +54,8 @@ end
 <% end %>
 ```
 
+## Form with FormObjects
+
 How the same can be achieved using `FormObjects`?
 
 ```ruby
@@ -92,6 +94,8 @@ end
 <% end %>
 ```
 
+## How to save FormObject do database?
+
 Ok, now we can just save user to our storage. Do you you think about `@user_form.save`?
 
 ![](http://dc472.4shared.com/img/G-w_8x6P/s3/13754405010/Nooo.gif)
@@ -110,6 +114,8 @@ class UserCreator
   end
 end
 ```
+
+## Namespace for attributes
 
 Rails form generator will generate form with attributes scoped in `user_form`. So when you submit your form `params` will look like this:
 
@@ -179,6 +185,8 @@ def create
 end
 ```
 
+## Additional attribute
+
 Let's do something standard. Add term and condition checkbox. In rails way you will add `term` attribute to your `User` model, didn't you?
 Do not you think it's a little weird? I think so. Let's do this in `UserForm`.
 
@@ -239,6 +247,8 @@ form.errors.full_messages
 # => ["First name can't be blank"]
 # No terms errors
 ```
+
+## Form in form (nested_form)
 
 Let add another form to our `UserForm`. User during registration should give the address. Lets create `LocationForm`.
 
@@ -323,7 +333,11 @@ UserForm.new(params).serialized_attributes
 # => {:first_name=>"FirstName", :last_name=>"LastName", :terms=>true, :address=>{:address=>"Street"}}
 ```
 
-You can use this `Hash` inside your classes, services etc. What we should do when we need more than 1 address? We can use `Array` from Virtus.
+You can use this `Hash` inside your classes, services etc.
+
+## Many forms in form
+
+What we should do when we need more than 1 address? We can use `Array` from Virtus.
 
 ```ruby
 class UserForm < FormObjects::Base
@@ -354,13 +368,13 @@ So we can apply this to our form.
 class UserForm < FormObjects::Base
   include FormObjects::Naming
 
-  NUMBER_OF_LOCATION_FORM = 2
+  NUMBER_OF_LOCATION_FORMS = 2
 
   field :first_name, String
   field :last_name, String
   field :terms, Boolean
 
-  nested_form :addresses, Array[LocationForm], default: proc { Array.new(NUMBER_OF_LOCATION_FORM, LocationForm.new) }
+  nested_form :addresses, Array[LocationForm], default: proc { Array.new(NUMBER_OF_LOCATION_FORMS, LocationForm.new) }
 
   validates :first_name, presence: true
   validates :terms, acceptance: { accept: true }
@@ -419,8 +433,8 @@ def converted_params
 end
 ```
 
+## Summary
 
-Summary:
 * FormObjects use Virtus for Property API
 * Nested forms objects are validate together with parent form, errors are being push to parent.
 * ``` #serialized_attributes ``` method returns attributes hash
