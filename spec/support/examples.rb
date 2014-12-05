@@ -18,7 +18,7 @@ class UserForm < FormObjects::Base
 end
 
 class MessageForm < FormObjects::Base
-  extend FormObjects::Naming
+  include FormObjects::Naming
 
   field :body, String
   field :author, String

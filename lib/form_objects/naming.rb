@@ -1,10 +1,12 @@
+require 'active_support/concern'
+
 module FormObjects
   module Naming
-    def self.extended(base)
-      model_name = base.name.gsub(/Form\Z/, '')
+    extend ActiveSupport::Concern
 
-      define_method :model_name do
-        ActiveModel::Name.new(self, nil, model_name)
+    included do
+      def self.model_name
+        @model_name ||= ActiveModel::Name.new(self, nil, self.name.gsub(/Form\Z/, ''))
       end
     end
   end
