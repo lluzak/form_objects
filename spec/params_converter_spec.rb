@@ -47,6 +47,10 @@ describe FormObjects::ParamsConverter do
         subject.params["events_attributes"].should == converted_attributes
       end
 
+      it "returns HashWithIndifferentAccess" do
+        subject.params.should be_kind_of(HashWithIndifferentAccess)
+      end
+
       it "does not modify original params" do
         subject.params.should_not == params
       end
