@@ -6,11 +6,11 @@ require 'form_objects/version'
 Gem::Specification.new do |spec|
   spec.name          = "form_objects"
   spec.version       = FormObjects::VERSION
-  spec.authors       = ["Przemek Lusar"]
-  spec.email         = ["lluzak@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.authors       = ["Piotr Nielacny", "Przemek Lusar"]
+  spec.email         = ["piotr.nielacny@gmail.com", "przemyslaw.lusar@gmail.com"]
+  spec.description   = %q{Micro library for creating and managing complex forms}
+  spec.summary       = %q{Micro library for creating and managing complex forms}
+  spec.homepage      = "https://github.com/lluzak/form_objects"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
